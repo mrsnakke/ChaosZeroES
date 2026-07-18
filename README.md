@@ -1,19 +1,47 @@
-# ChaosZero Nightmare — Parche al Espanol
+<p align="center">
+  <img src="profile.webp" width="120" height="120" alt="ChaosZero ES Logo">
+</p>
 
-Parche automatico que traduce **ChaosZero Nightmare** al espanol.
+<p align="center">
+  <img src="https://img.shields.io/badge/Version-1.0-blue.svg" alt="Version">
+  <img src="https://img.shields.io/badge/Python-3.10+-yellow.svg" alt="Python">
+  <img src="https://img.shields.io/badge/Platform-Windows-lightgrey.svg" alt="Platform">
+  <img src="https://img.shields.io/badge/UI-tkinter-green.svg" alt="UI">
+  <img src="https://img.shields.io/badge/Traducci%C3%B3n-es--MX-red.svg" alt="es-MX">
+</p>
 
-Este mod lo hice para la comunidad. Hay gente que quiere jugar pero el idioma desanima — ahora no hay pretexto, pueden jugar en espanol.
+<h1 align="center">ChaosZero Nightmare — Parche al Espanol</h1>
+
+Parche automatico que traduce **ChaosZero Nightmare** al espanol latinoamericano.
+
+Hay gente que quiere jugar pero el idioma desanima — ahora no hay pretexto, pueden jugar en espanol.
 
 ---
 
-## Como funciona el EXE
+## Instalacion rapida
 
-1. Descarga `ChaosZeroES.exe`
-2. Ejecutalo (no necesita instalacion de Python ni nada)
-3. Selecciona la carpeta del juego `Games\ChaosZeroNightmare`
-4. Click en **Parchear**
-5. Espera a que termine (la primera vez tarda ~5-20 min, despues cada parche nuevo tardara unos ~30s)
-6. Inicia el juego en idioma **COREANO** — el texto aparecera en espanol
+### 1. Crea una carpeta para el parche
+
+> **Importante:** El EXE genera archivos auxiliares la primera vez que se ejecuta (cache de traducciones, configuracion, etc.). Ponlo en su propia carpeta para que no ensucie otras carpetas.
+
+```
+C:\ChaosZeroES\
+├── ChaosZeroES.exe      ← Ejecutable
+├── app_config.json      ← (se crea solo) Guarda la ruta del juego
+├── text_en_extracted.tsv← (se crea solo) Cache de textos EN
+├── text_ko_text.tsv     ← (se crea solo) Traducciones ES
+└── bin_full_rebuild\    ← (se crea solo) data.pack reconstruidos
+```
+
+### 2. Ejecuta el parche
+
+1. Doble clic en `ChaosZeroES.exe`
+2. Selecciona la carpeta del juego: `...\Games\ChaosZeroNightmare`
+3. Click en **Parchear**
+4. Espera a que termine:
+   - Primera vez: ~5-20 min (descarga y traduce todo)
+   - Siguientes veces: ~30s (solo traduce lo nuevo)
+5. Inicia el juego en idioma **COREANO** — el texto aparecera en espanol
 
 Los archivos originales se guardan como `.bak` por si quieres restaurar.
 
@@ -29,11 +57,23 @@ Cuando el juego recibe una actualizacion, el parche se pierde porque descarga lo
 
 ---
 
-## Requisitos
+## Tips
 
-- Windows
-- ChaosZero Nightmare instalado
--Conexion a internet (para traducir)
+- **Carpeta dedicada:** Usa una carpeta solo para ChaosZeroES (ej: `C:\ChaosZeroES`). El exe genera archivos auxiliares y no quieres mezclarlos con otros programas.
+- **No muevas el exe despues del primer uso:** Si lo mueves, puede perder la configuracion de la ruta del juego. Si pasa, solo vuelve a seleccionar la carpeta.
+- **Backup automatico:** El parche guarda `.bak` de los archivos originales. Si algo sale mal, renombra `.bak` a su nombre original.
+- **Re-parchear es rapido:** El exe guarda cache de las traducciones. En parches futuros solo traduce lo nuevo, toma ~30 segundos.
+- **Conexion a internet:** Necesaria para traducir.
+
+---
+
+## Solucion de problemas
+
+| Problema | Solucion |
+|----------|----------|
+| El juego no muestra espanol | Asegurate de tener el idioma del juego en **COREANO** |
+| El exe se cierra solo | Posible error de conexion. Vuelve a ejecutar — retoma desde donde se quedo |
+| Quiiero restaurar originales | Busca los archivos `.bak` en la carpeta del juego y renombralos quitando `.bak` |
 
 ---
 
