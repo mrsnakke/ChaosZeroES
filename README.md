@@ -35,6 +35,8 @@ C:\ChaosZeroES\
 
 ### 2. Ejecuta el parche
 
+Descarga el parche https://github.com/mrsnakke/ChaosZeroES/releases
+
 1. Doble clic en `ChaosZeroES.exe`
 2. Selecciona la carpeta del juego: `...\Games\ChaosZeroNightmare`
 3. Click en **Parchear**
