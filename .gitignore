@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# PyInstaller
+dist/
+build/
+*.spec
+
+# Game data (generado)
+bin_full_rebuild/
+*.tsv
+
+# Config local
+app_config.json
+
+# Entorno virtual
+venv/
+.env
+*.egg-info/
