@@ -11,7 +11,7 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(sys.executable if getattr(sys, 'fro
 EN_TSV = os.path.join(SCRIPT_DIR, "text_en_extracted.tsv")
 ES_TSV = os.path.join(SCRIPT_DIR, "text_ko_text.tsv")
 
-def google_translate_batch(texts, src='en', dest='es'):
+def google_translate_batch(texts, src='en', dest='es-MX'):
     """Translate a batch of texts using Google Translate."""
     # Join with unique separator to preserve individual texts
     separator = " ||| "

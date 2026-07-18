@@ -122,7 +122,7 @@ def extract_text_from_db(pack, db_key):
     return texts
 
 
-def google_translate_batch(texts, src='en', dest='es'):
+def google_translate_batch(texts, src='en', dest='es-MX'):
     separator = " ||| "
     combined = separator.join(t.replace("\n", " ") for t in texts)
     try:
@@ -168,7 +168,11 @@ OFFLINE_DICT = {
     "Friend": "Amigo", "Friends": "Amigos",
     "Guild": "Gremio", "Ranking": "Ranking",
     "Season": "Temporada", "Grade": "Rango", "Level": "Nivel",
-    "EXP": "EXP", "HP": "HP", "MP": "MP",
+    "EXP": "EXP", "HP": "HP", "MP": "MP", "SP": "SP", "TP": "TP",
+    "ATK": "ATK", "DEF": "DEF", "SPD": "SPD", "CRIT": "CRIT", "EVA": "EVA",
+    "DMG": "DMG", "AOE": "AOE", "DOT": "DOT", "DPS": "DPS", "HP": "HP",
+    "TB": "TB", "CD": "CD", "PVP": "PVP", "PVE": "PVE", "NPC": "NPC",
+    "HP": "HP", "MP": "MP", "EXP": "EXP", "LV": "LV", "MAX": "MAX", "MIN": "MIN",
     "Attack": "Ataque", "Defense": "Defensa", "Speed": "Velocidad",
     "Critical": "Cr\u00edtico", "Evasion": "Evasi\u00f3n",
     "Damage": "Da\u00f1o", "Recovery": "Recuperaci\u00f3n",
@@ -272,6 +276,17 @@ OFFLINE_DICT = {
     "Rare": "Raro", "Epic": "\u00c9pico",
     "Legendary": "Legendario",
     "Common": "Com\u00fan", "Uncommon": "Poco com\u00fan",
+    # ponytail: abbreviation/technical protection
+    "TB": "TB", "CD": "CD", "PVP": "PVP", "PVE": "PVE",
+    "ATK": "ATK", "DEF": "DEF", "SPD": "SPD", "CRIT": "CRIT", "EVA": "EVA",
+    "DMG": "DMG", "AOE": "AOE", "DOT": "DOT", "DPS": "DPS",
+    "SP": "SP", "TP": "TP", "LV": "LV", "cm": "cm",
+    "Tab": "Tab", "Caps": "Caps", "IntlRo": "IntlRo",
+    "A": "A", "B": "B", "C": "C", "D": "D", "E": "E", "F": "F",
+    "G": "G", "H": "H", "I": "I", "J": "J", "K": "K", "L": "L",
+    "M": "M", "N": "N", "\u00d1": "\u00d1", "O": "O", "P": "P", "Q": "Q",
+    "R": "R", "S": "S", "T": "T", "U": "U", "V": "V", "W": "W",
+    "X": "X", "Y": "Y", "Z": "Z",
 }
 
 
@@ -384,20 +399,29 @@ def run_translate(source_texts, src_lang='en', progress_cb=None):
         BATCH_SIZE = 20
         WORKERS = 6
 
+        def _is_abbrev(t):
+            # ponytail: skip translating short uppercase strings (game abbreviations)
+            s = t.strip()
+            return len(s) <= 6 and s.isalpha() and s.upper() == s and len(s) > 1
+
         def do_batch(batch):
             tids, texts = zip(*batch)
-            res = google_translate_batch(list(texts), src=src_lang, dest='es')
-            if res and len(res) == len(batch):
-                return list(zip(tids, res)), 0, len(batch)
-            out, errs, ok = [], 0, 0
-            for tid, text in zip(tids, texts):
-                single = google_translate_batch([text], src=src_lang, dest='es')
-                if single and len(single) == 1:
-                    out.append((tid, single[0])); ok += 1
+            abbrev = [(tid, txt) for tid, txt in zip(tids, texts) if _is_abbrev(txt)]
+            to_tr = [(tid, txt) for tid, txt in zip(tids, texts) if not _is_abbrev(txt)]
+            out = []
+            for tid, txt in abbrev:
+                out.append((tid, txt))
+            if to_tr:
+                _, tr_texts = zip(*to_tr)
+                res = google_translate_batch(list(tr_texts), src=src_lang, dest='es-MX')
+                if res and len(res) == len(to_tr):
+                    out.extend(zip([t[0] for t in to_tr], res))
                 else:
-                    out.append((tid, text)); errs += 1
-                time.sleep(0.05)
-            return out, errs, ok
+                    for tid, text in to_tr:
+                        single = google_translate_batch([text], src=src_lang, dest='es-MX')
+                        out.append((tid, single[0] if single and len(single) == 1 else text))
+                        time.sleep(0.05)
+            return out, 0, len(out)
 
         with ThreadPoolExecutor(max_workers=WORKERS) as pool:
             futures = {}
