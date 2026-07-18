@@ -149,6 +149,24 @@ def google_translate_batch(texts, src='en', dest='es-MX'):
     return None
 
 
+POST_TRANSLATE_FIXES = {
+    "oportunidad de crear": "probabilidad de crear",
+    "oportunidad de obtener": "probabilidad de obtener",
+    "oportunidad de ganar": "probabilidad de ganar",
+    "oportunidad de $Dibujar$": "probabilidad de $Dibujar$",
+    "oportunidad de $Debilitar$": "probabilidad de $Debilitar$",
+    "oportunidad de creación de Códices": "probabilidad de creación de Códices",
+    "oportunidad crítica": "probabilidad crítica",
+    "oportunidad critica": "probabilidad crítica",
+}
+
+
+def post_translate_fix(text):
+    for bad, good in POST_TRANSLATE_FIXES.items():
+        text = text.replace(bad, good)
+    return text
+
+
 OFFLINE_DICT = {
     "OK": "Aceptar", "Cancel": "Cancelar", "Close": "Cerrar",
     "Settings": "Configuraci\u00f3n", "Start": "Iniciar", "Exit": "Salir",
@@ -276,6 +294,8 @@ OFFLINE_DICT = {
     "Rare": "Raro", "Epic": "\u00c9pico",
     "Legendary": "Legendario",
     "Common": "Com\u00fan", "Uncommon": "Poco com\u00fan",
+    "Chance": "Probabilidad", "Critical Chance": "Probabilidad cr\u00edtica",
+    "chance": "probabilidad", "critical chance": "probabilidad cr\u00edtica",
     # ponytail: abbreviation/technical protection
     "TB": "TB", "CD": "CD", "PVP": "PVP", "PVE": "PVE",
     "ATK": "ATK", "DEF": "DEF", "SPD": "SPD", "CRIT": "CRIT", "EVA": "EVA",
@@ -415,11 +435,12 @@ def run_translate(source_texts, src_lang='en', progress_cb=None):
                 _, tr_texts = zip(*to_tr)
                 res = google_translate_batch(list(tr_texts), src=src_lang, dest='es-MX')
                 if res and len(res) == len(to_tr):
-                    out.extend(zip([t[0] for t in to_tr], res))
+                    out.extend(zip([t[0] for t in to_tr], [post_translate_fix(r) for r in res]))
                 else:
                     for tid, text in to_tr:
                         single = google_translate_batch([text], src=src_lang, dest='es-MX')
-                        out.append((tid, single[0] if single and len(single) == 1 else text))
+                        tr = single[0] if single and len(single) == 1 else text
+                        out.append((tid, post_translate_fix(tr)))
                         time.sleep(0.05)
             return out, 0, len(out)
 

@@ -33,9 +33,9 @@ echo.
 set "SCRIPT_DIR=%~dp0"
 
 python -m PyInstaller ^
-    --onefile ^
-    --windowed ^
-    --name "ChaosZeroES" ^
+    -F ^
+    -w ^
+    -n "ChaosZeroES" ^
     --distpath "%SCRIPT_DIR%dist" ^
     --workpath "%SCRIPT_DIR%build" ^
     --specpath "%SCRIPT_DIR%" ^
