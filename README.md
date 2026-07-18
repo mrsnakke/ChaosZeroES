@@ -10,9 +10,9 @@
   <img src="https://img.shields.io/badge/Traducci%C3%B3n-es--MX-red.svg" alt="es-MX">
 </p>
 
-<h1 align="center">ChaosZero Nightmare — Parche al Espanol</h1>
+<h1 align="center">ChaosZero Nightmare — Parche al Español</h1>
 
-Parche automatico que traduce **ChaosZero Nightmare** al espanol latinoamericano.
+Parche automatico que traduce **ChaosZero Nightmare** al español latinoamericano.
 ## Preview
 > Screenshots<img width="2559" height="1439" alt="image" src="https://github.com/user-attachments/assets/fc5a1dd5-a4ab-4df2-b5be-ab0ee6657b53" /><img width="2559" height="1439" alt="image" src="https://github.com/user-attachments/assets/112ff2c6-e9ae-47df-98e5-4b51f4772161" />
 
@@ -41,7 +41,7 @@ C:\ChaosZeroES\
 4. Espera a que termine:
    - Primera vez: ~5-20 min (descarga y traduce todo)
    - Siguientes veces: ~30s (solo traduce lo nuevo)
-5. Inicia el juego en idioma **COREANO** — el texto aparecera en espanol
+5. Inicia el juego en idioma **COREANO** — el texto aparecera en español
 
 Los archivos originales se guardan como `.bak` por si quieres restaurar.
 
@@ -71,7 +71,7 @@ Cuando el juego recibe una actualizacion, el parche se pierde porque descarga lo
 
 | Problema | Solucion |
 |----------|----------|
-| El juego no muestra espanol | Asegurate de tener el idioma del juego en **COREANO** |
+| El juego no muestra español | Asegurate de tener el idioma del juego en **COREANO** |
 | El exe se cierra solo | Posible error de conexion. Vuelve a ejecutar — retoma desde donde se quedo |
 | Quiiero restaurar originales | Busca los archivos `.bak` en la carpeta del juego y renombralos quitando `.bak` |
 
