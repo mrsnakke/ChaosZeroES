@@ -13,8 +13,10 @@
 <h1 align="center">ChaosZero Nightmare — Parche al Espanol</h1>
 
 Parche automatico que traduce **ChaosZero Nightmare** al espanol latinoamericano.
-
-Hay gente que quiere jugar pero el idioma desanima — ahora no hay pretexto, pueden jugar en espanol.
+## Preview
+> Screenshots
+<img width="2559" height="1439" alt="image" src="https://github.com/user-attachments/assets/fc5a1dd5-a4ab-4df2-b5be-ab0ee6657b53" />
+<img width="2559" height="1439" alt="image" src="https://github.com/user-attachments/assets/112ff2c6-e9ae-47df-98e5-4b51f4772161" />
 
 ---
 
