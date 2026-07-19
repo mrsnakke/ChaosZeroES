@@ -15,9 +15,10 @@
 Parche automatico que traduce **ChaosZero Nightmare** al español latinoamericano.
 
 ## Preview
-
+<img width="617" height="752" alt="image" src="https://github.com/user-attachments/assets/d0a96b02-eb75-40a0-9244-5cfb1a223526" />
 <img width="2557" height="1439" alt="image" src="https://github.com/user-attachments/assets/85ab08b4-fd70-4f8e-8634-83cc6853ce70" />
 <img width="2559" height="1439" alt="image" src="https://github.com/user-attachments/assets/112ff2c6-e9ae-47df-98e5-4b51f4772161" />
+
 
 ---
 
