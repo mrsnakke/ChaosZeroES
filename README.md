@@ -28,9 +28,9 @@ Parche automatico que traduce **ChaosZero Nightmare** al español latinoamerican
 C:\ChaosZeroES\
 ├── ChaosZeroES.exe      ← Ejecutable
 ├── app_config.json      ← (se crea solo) Guarda la ruta del juego
-├── text_en_extracted.tsv← (se crea solo) Cache de textos EN
-├── text_ko_text.tsv     ← (se crea solo) Traducciones ES
-└── bin_full_rebuild\    ← (se crea solo) data.pack reconstruidos
+├── translations.tsv     ← (se crea solo) Cache de textos EN
+└── glossary.json        ← (se crea solo) Traducciones ES
+ 
 ```
 
 ### 2. Ejecuta el parche
@@ -40,10 +40,8 @@ Descarga el parche https://github.com/mrsnakke/ChaosZeroES/releases
 1. Doble clic en `ChaosZeroES.exe`
 2. Selecciona la carpeta del juego: `...\Games\ChaosZeroNightmare`
 3. Click en **Parchear**
-4. Espera a que termine:
-   - Primera vez: ~5-20 min (descarga y traduce todo)
-   - Siguientes veces: ~30s (solo traduce lo nuevo)
-5. Inicia el juego en idioma **COREANO** — el texto aparecera en español
+4. Espera a que termine.
+5. Inicia el juego en idioma **Ingles** — el texto aparecera en español
 
 Los archivos originales se guardan como `.bak` por si quieres restaurar.
 
@@ -61,7 +59,7 @@ Cuando el juego recibe una actualizacion, el parche se pierde porque descarga lo
 
 ## Tips
 
-- **Carpeta dedicada:** Usa una carpeta solo para ChaosZeroES (ej: `C:\ChaosZeroES`). El exe genera archivos auxiliares y no quieres mezclarlos con otros programas.
+- **Carpeta dedicada:** Usa una carpeta solo para ChaosZeroES. El exe genera archivos auxiliares y no quieres mezclarlos con otros programas.
 - **No muevas el exe despues del primer uso:** Si lo mueves, puede perder la configuracion de la ruta del juego. Si pasa, solo vuelve a seleccionar la carpeta.
 - **Backup automatico:** El parche guarda `.bak` de los archivos originales. Si algo sale mal, renombra `.bak` a su nombre original.
 - **Re-parchear es rapido:** El exe guarda cache de las traducciones. En parches futuros solo traduce lo nuevo, toma ~30 segundos.
@@ -73,9 +71,8 @@ Cuando el juego recibe una actualizacion, el parche se pierde porque descarga lo
 
 | Problema | Solucion |
 |----------|----------|
-| El juego no muestra español | Asegurate de tener el idioma del juego en **COREANO** |
+| El juego no muestra español | Asegurate de tener el idioma del juego en **ingles** |
 | El exe se cierra solo | Posible error de conexion. Vuelve a ejecutar — retoma desde donde se quedo |
-| Quiiero restaurar originales | Busca los archivos `.bak` en la carpeta del juego y renombralos quitando `.bak` |
 
 ---
 
