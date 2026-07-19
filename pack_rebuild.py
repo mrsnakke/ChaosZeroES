@@ -223,8 +223,6 @@ def process_en_to_es(entries, tsv_path, progress_cb=None):
                 en, es = tsv_map[text_id_str]
                 orig_en = rest[:n2].decode('utf-8', errors='replace') if n2 >= 0 else rest.decode('utf-8', errors='replace')
                 es = _restore_en_markup(orig_en, es)
-                for bad, good in SHORTEN_MAP.items():
-                    es = es.replace(bad, good)
                 new_text = es.encode('utf-8')
                 tent.value_bytes = text_id_bytes + b'\x00' + new_text + trailing
                 replaced += 1

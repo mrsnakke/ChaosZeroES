@@ -59,6 +59,8 @@ POST_FIXES = {
     "oportunidad de creaci\u00f3n de C\u00f3dices": "probabilidad de creaci\u00f3n de C\u00f3dices",
     "oportunidad cr\u00edtica": "probabilidad cr\u00edtica",
     "oportunidad critica": "probabilidad cr\u00edtica",
+    "#run_pct_1# oportunidad de": "#run_pct_1# probabilidad de",
+    "#run_pct_1# oportunidad": "#run_pct_1# probabilidad",
 }
 
 SHORTEN_MAP = {
@@ -144,9 +146,6 @@ def _is_abbrev(text):
 def _post_fix(text, en_len=None):
     for bad, good in POST_FIXES.items():
         text = text.replace(bad, good)
-    if en_len is not None and len(text) > en_len * 1.15:
-        for bad, good in SHORTEN_MAP.items():
-            text = text.replace(bad, good)
     return text
 
 
@@ -326,18 +325,20 @@ def translate_all(en_texts, glossary, progress_cb=None):
             continue
 
         if en_text in glossary and glossary[en_text] != en_text:
-            es = _restore_en_markup(en_text, glossary[en_text])
+            es = _post_fix(glossary[en_text], len(en_text))
+            es = _restore_en_markup(en_text, es)
             translations[tid] = (en_text, es)
             glossary_hits += 1
             continue
 
         if s in OFFLINE_DICT:
-            es = _restore_en_markup(en_text, OFFLINE_DICT[s])
+            es = _post_fix(OFFLINE_DICT[s], len(en_text))
+            es = _restore_en_markup(en_text, es)
             translations[tid] = (en_text, es)
             glossary_hits += 1
             continue
         if s.upper() in OFFLINE_DICT:
-            es = _restore_en_markup(en_text, OFFLINE_DICT[s.upper()])
+            es = _post_fix(OFFLINE_DICT[s.upper()], len(en_text))
             translations[tid] = (en_text, es)
             glossary_hits += 1
             continue

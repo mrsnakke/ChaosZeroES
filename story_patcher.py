@@ -310,11 +310,6 @@ def apply_story_patches(entries, patch_infos, glossary, progress_cb=None):
                 if oi < len(items) and isinstance(items[oi], dict):
                     en_orig = items[oi].get('text_en', '')
                     if en_orig != es_text:
-                        if len(es_text) > len(en_orig) * 1.15:
-                            for bad, good in SHORTEN_MAP.items():
-                                es_text = es_text.replace(bad, good)
-                        if len(es_text) > len(en_orig) * 1.15:
-                            es_text = es_text[:max(len(en_orig), len(es_text) * 8 // 10)]
                         items[oi]['text_en'] = es_text
                         items[oi]['text_es'] = es_text
                         changed = True
