@@ -2,6 +2,7 @@
 __pycache__/
 *.pyc
 *.pyo
+*.pyd
 
 # PyInstaller
 dist/
@@ -17,5 +18,23 @@ app_config.json
 
 # Entorno virtual
 venv/
+.venv/
 .env
 *.egg-info/
+
+# Media
+*.webp
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.bmp
+*.ico
+
+# Logs
+*.log
+
+# OS
+Thumbs.db
+Desktop.ini
+.DS_Store
