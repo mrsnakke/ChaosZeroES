@@ -12,7 +12,7 @@
 
 <h1 align="center">ChaosZero Nightmare — Parche al Español</h1>
 
-"Este es un proyecto comunitario sin fines de lucro para traer la traducción al español de **Chaos Zero Nightmare** **(CZN)**. Si buscas jugar a Chaos Zero Nightmare en español con textos adaptados al español, este parche te permitirá traducir la interfaz, las cartas y la historia del juego."
+>Este es un proyecto comunitario sin fines de lucro para traer la traducción al español de **Chaos Zero Nightmare** **(CZN)**. Si buscas jugar a Chaos Zero Nightmare en español con textos adaptados al español, este parche te permitirá traducir la interfaz, las cartas y la historia del juego.
 
 ## Preview
 
