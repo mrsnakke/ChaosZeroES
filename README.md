@@ -12,7 +12,7 @@
 
 <h1 align="center">ChaosZero Nightmare — Parche al Español</h1>
 
-Parche automatico que traduce **ChaosZero Nightmare** al español latinoamericano.
+"Este es un proyecto comunitario sin fines de lucro para traer la traducción al español de **Chaos Zero Nightmare** **(CZN)**. Si buscas jugar a Chaos Zero Nightmare en español con textos adaptados al español, este parche te permitirá traducir la interfaz, las cartas y la historia del juego."
 
 ## Preview
 
@@ -35,7 +35,7 @@ Parche automatico que traduce **ChaosZero Nightmare** al español latinoamerican
 </table>
 
 ---
-
+### Cómo instalar el parche de español en Chaos Zero Nightmare
 ## Instalacion
 
 1. Descarga el zip de [Releases](https://github.com/mrsnakke/ChaosZeroES/releases)
