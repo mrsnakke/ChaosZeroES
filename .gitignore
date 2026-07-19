@@ -20,6 +20,9 @@ bin_full_rebuild/
 # Local config (per-user)
 app_config.json
 
+# Scripts
+*.bat
+
 # OS
 Thumbs.db
 .DS_Store
