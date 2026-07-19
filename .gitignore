@@ -4,37 +4,11 @@ __pycache__/
 *.pyo
 *.pyd
 
-# PyInstaller
-dist/
-build/
-*.spec
-
-# Game data (generado)
-bin_full_rebuild/
-*.tsv
-
-# Config local
-app_config.json
-
-# Entorno virtual
+# Venv
 venv/
 .venv/
 .env
-*.egg-info/
-
-# Media
-*.webp
-*.png
-*.jpg
-*.jpeg
-*.gif
-*.bmp
-*.ico
-
-# Logs
-*.log
 
 # OS
 Thumbs.db
-Desktop.ini
 .DS_Store
