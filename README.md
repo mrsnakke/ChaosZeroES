@@ -15,10 +15,21 @@
 Parche automatico que traduce **ChaosZero Nightmare** al español latinoamericano.
 
 ## Preview
-<img width="617" height="752" alt="image" src="https://github.com/user-attachments/assets/d0a96b02-eb75-40a0-9244-5cfb1a223526" />
-<img width="2557" height="1439" alt="image" src="https://github.com/user-attachments/assets/85ab08b4-fd70-4f8e-8634-83cc6853ce70" />
-<img width="2559" height="1439" alt="image" src="https://github.com/user-attachments/assets/112ff2c6-e9ae-47df-98e5-4b51f4772161" />
 
+<table>
+  <tr>
+    <td width="30%" valign="top" align="center">
+      <b>Parcheador</b><br><br>
+      <img src="https://github.com/user-attachments/assets/d0a96b02-eb75-40a0-9244-5cfb1a223526" width="100%" alt="ChaosZero ES Patcher" />
+    </td>
+    <td width="70%" valign="top" align="center">
+      <b>Capturas del Juego</b><br><br>
+      <img src="https://github.com/user-attachments/assets/85ab08b4-fd70-4f8e-8634-83cc6853ce70" width="100%" alt="Gameplay 1" />
+      <br><br>
+      <img src="https://github.com/user-attachments/assets/112ff2c6-e9ae-47df-98e5-4b51f4772161" width="100%" alt="Gameplay 2" />
+    </td>
+  </tr>
+</table>
 
 ---
 
