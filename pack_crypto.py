@@ -1,0 +1,133 @@
+"""
+Pack crypto: XOR encryption, PLPcK format, multi-volume reading.
+Extracted from ChaosZero-Toolkit by NineS11942.
+"""
+import struct, os
+import numpy as np
+
+# ═══════════════════════════════════════════════════════════════════════
+# Keys
+# ═══════════════════════════════════════════════════════════════════════
+def generate_pack_xor_key():
+    seed = 150812
+    key = bytearray(129)
+    for i in range(129):
+        seed = (seed * 1103515245) & 0xFFFFFFFF
+        key[i] = (seed >> 16) & 0xFF
+    return bytes(key)
+
+PACK_XOR_KEY = generate_pack_xor_key()
+INNER_XOR_KEY = bytes([
+    0x91,0xae,0x4e,0xd4,0x64,0x4f,0x58,0x51,0x62,0xec,0x1b,0xd5,0xef,0x24,0xad,0xdb,
+    0xaf,0x83,0x82,0x42,0xae,0xf5,0x1e,0x97,0x80,0x4b,0x13,0x4f,0xfd,0x8c,0xe5,0xbb,
+    0x4f,0x6e,0x3e,0x64,0x51,0x14,0x7c,0xdf,0x56,0xc3,0x18,0xe5,0xe9,0x64,0xc9,0x99,
+    0xc0,0xd9,0x5c,0xc8,0x60,0x82,0x2e,0x6b,0x41,0x8b,0xe4,0x65,0xd7,0x9a,0x03,0x6d,
+    0xbf,0x67,0xab,0x3d,0xa7,0x2a,0xb1,0x02,0x3a,0x45,0x61,0xf4,0x44,0xe5,0xce,0x85,
+    0x8d,0x23,0xea,0x10,0xfe,0xb4,0x89,0x91,0x51,0xad,0x7e,0x43,0xff,0x3e,0x24,0x19,
+    0xa9,0x7b,0x4d,0xd3,0xaf,0x4e,0xf5,0xc8,0x29,0xe5,0xaf,0x4a,0xce,0x94,0x36,0xf6,
+    0xb6,0xb6,0x38,0x2e,0x9d,0xfd,0x26,0x64,0x20,0x99,0x01,0x1a,0x48,0x99,0x08,0x9c,
+    0x9d,0x4b,0x9f,0x80,0xbb,0xb0,0x0a,0x4c,0xc7,0x32,0x55,0xce,0x1f,0x78,0x64,0x6e,
+    0x91,0xc9,0xc1,0x23,0x13,0xf5,0xd8,0x40,0xdc,0x51,0x45,0x70,0x10,0xd3,0x7d,0x19,
+    0x61,0x5b,0xb6,0x98,0x88,0xb4,0x2b,0x19,0xe7,0x49,0xf9,0x93,0xc0,0x03,0x37,0xe9,
+    0x33,0x2f,0x89,0xb3,0x20,0xc1,0x73,0xa5,0x65,0x38,0x48,0x78,0x87,0x98,0xa7,0x71,
+    0x73,0x9e,0x72,0xdb,0xc8,0x4c,0x79,0x46,0x59,0x71,0x49,0xbd,0xda,0xe4,0xe3,0xbd,
+    0x1a,0x17,0x85,0x6c,0x85,0xa5,0x55,0xcf,0xa2,0x4f,0x63,0x52,0xd0,0x05,0x93,0x3b,
+    0x50,0x04,0x2b,0xe0,0xba,0x4c,0x70,0x8d,0xe8,0xeb,0xb5,0x20,0x59,0xb2,0x05,0x9c,
+    0x9b,0xfe,0x90,0xd8,0x92,0x3d,0xf7,0x4b,0x43,0x91,0x1b,0xbc,0x00,0xbb,0x6b,0xfa,
+])
+
+_PACK_XOR_NP = np.frombuffer(PACK_XOR_KEY, dtype=np.uint8)
+_INNER_XOR_NP = np.frombuffer(INNER_XOR_KEY, dtype=np.uint8)
+
+# ═══════════════════════════════════════════════════════════════════════
+# XOR operations
+# ═══════════════════════════════════════════════════════════════════════
+def _fast_xor(data, key_np, offset):
+    n = len(data)
+    if n == 0:
+        return data
+    arr = np.frombuffer(data, dtype=np.uint8).copy()
+    key_len = len(key_np)
+    start_phase = offset % key_len
+    repeats = (n + start_phase + key_len - 1) // key_len + 1
+    key_stream = np.tile(key_np, repeats)[start_phase:start_phase + n]
+    arr ^= key_stream
+    return arr.tobytes()
+
+def pack_xor_crypt(data, file_offset):
+    return _fast_xor(data, _PACK_XOR_NP, file_offset)
+
+def inner_xor_crypt(data, base_offset):
+    return _fast_xor(data, _INNER_XOR_NP, base_offset)
+
+def find_inner_xor_offset(data_head):
+    for boff in range(256):
+        d5 = bytes([data_head[i] ^ INNER_XOR_KEY[(i + boff) % 256] for i in range(min(5, len(data_head)))])
+        if d5 == b'PLPcK':
+            return boff
+    return None
+
+def cdbm_hash(key_bytes):
+    h = 0
+    for b in key_bytes:
+        ch = b + 32 if 65 <= b <= 90 else b
+        h = (ch + 43 * h) & 0xFFFFFFFF
+    return h
+
+# ═══════════════════════════════════════════════════════════════════════
+# Multi-volume pack reader
+# ═══════════════════════════════════════════════════════════════════════
+class MultiVolumePack:
+    def __init__(self, base_dir):
+        self.volumes = []
+        pack_base = os.path.join(base_dir, "data.pack")
+        if not os.path.exists(pack_base):
+            raise FileNotFoundError(f"data.pack not found in {base_dir}")
+        sz = os.path.getsize(pack_base)
+        self.volumes.append((pack_base, 0, sz))
+        cumulative = sz
+        n = 1
+        while True:
+            vpath = f"{pack_base}~{n}"
+            if not os.path.exists(vpath):
+                break
+            sz = os.path.getsize(vpath)
+            self.volumes.append((vpath, cumulative, sz))
+            cumulative += sz
+            n += 1
+        self.total_size = cumulative
+        self._handles = {}
+
+    def _get_handle(self, vi):
+        if vi not in self._handles:
+            self._handles[vi] = open(self.volumes[vi][0], 'rb')
+        return self._handles[vi]
+
+    def read_raw(self, offset, size):
+        result = bytearray()
+        remaining = size
+        cur = offset
+        for i, (path, vol_start, vol_size) in enumerate(self.volumes):
+            if cur >= vol_start + vol_size:
+                continue
+            if cur < vol_start:
+                continue
+            local_off = cur - vol_start
+            can_read = min(remaining, vol_size - local_off)
+            fh = self._get_handle(i)
+            fh.seek(local_off)
+            data = fh.read(can_read)
+            result.extend(data)
+            remaining -= len(data)
+            cur += len(data)
+            if remaining <= 0:
+                break
+        return bytes(result)
+
+    def read_xor(self, offset, size):
+        return pack_xor_crypt(self.read_raw(offset, size), offset)
+
+    def close(self):
+        for fh in self._handles.values():
+            fh.close()
+        self._handles.clear()

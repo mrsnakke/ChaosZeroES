@@ -9,6 +9,17 @@ venv/
 .venv/
 .env
 
+# PyInstaller
+build/
+dist/
+*.spec
+
+# Generated output
+bin_full_rebuild/
+
+# Local config (per-user)
+app_config.json
+
 # OS
 Thumbs.db
 .DS_Store
